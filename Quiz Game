@@ -1,0 +1,63 @@
+import random
+
+class Quiz:
+    def __init__(self, questions):
+        self.questions = questions
+        self.score = 0
+
+    def display_welcome_message(self):
+        print("Welcome to the Quiz Game!")
+        print("You will be asked multiple-choice or fill-in-the-blank questions on a specific topic.")
+        print("Let's begin!\n")
+
+    def present_quiz_questions(self):
+        random.shuffle(self.questions)
+        for question in self.questions:
+            print(question["question"])
+            if question["type"] == "multiple_choice":
+                for idx, choice in enumerate(question["choices"], start=1):
+                    print(f"{idx}. {choice}")
+            user_answer = input("Your answer: ").strip().lower()
+            if user_answer == question["answer"].lower():
+                print("Correct!")
+                self.score += 1
+            else:
+                print("Incorrect!")
+                print("Correct answer:", question["answer"], "\n")
+
+    def display_final_results(self):
+        print("\nQuiz Completed!")
+        print("Your Score:", self.score, "/", len(self.questions))
+        if self.score == len(self.questions):
+            print("Congratulations! You got a perfect score!")
+        elif self.score >= len(self.questions) * 0.8:
+            print("Well done! You did great!")
+        elif self.score >= len(self.questions) * 0.5:
+            print("Not bad! You can do better next time.")
+        else:
+            print("Keep practicing! You'll improve.")
+
+def main():
+    # Define quiz questions
+    questions = [
+        {"question": "What is the capital of France?", "type": "fill_in_the_blank", "answer": "Paris"},
+        {"question": "What is the largest planet in our solar system?", "type": "multiple_choice", "choices": ["A. Jupiter", "B. Saturn", "C. Mars"], "answer": "A"},
+        {"question": "Who wrote 'To Kill a Mockingbird'?", "type": "fill_in_the_blank", "answer": "Harper Lee"},
+        {"question": "What is the chemical symbol for water?", "type": "fill_in_the_blank", "answer": "H2O"},
+        {"question": "Which programming language is known as the 'language of the web'?", "type": "fill_in_the_blank", "answer": "JavaScript"}
+    ]
+
+    # Create quiz instance
+    quiz = Quiz(questions)
+
+    # Display welcome message and rules
+    quiz.display_welcome_message()
+
+    # Present quiz questions
+    quiz.present_quiz_questions()
+
+    # Display final results
+    quiz.display_final_results()
+
+if __name__ == "__main__":
+    main()
